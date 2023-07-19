@@ -1,13 +1,16 @@
+"use client";
+
 import { ShoppingCartIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Product } from "@/lib/hooks/getProducts";
 
 export default function ProductCard({ product }: { product: Product }): React.JSX.Element {
+	const router = useRouter();
 	return (
 		<div className="w-72 rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl">
-			<Link href={`/products/${product.slug}`}>
+			<div onClick={(): void => router.push(`/product/${product.slug}`)}>
 				<Image
 					unoptimized
 					width={100}
@@ -27,7 +30,7 @@ export default function ProductCard({ product }: { product: Product }): React.JS
 						</div>
 					</div>
 				</div>
-			</Link>
+			</div>
 		</div>
 	);
 }
