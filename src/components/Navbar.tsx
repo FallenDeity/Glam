@@ -6,6 +6,7 @@ import React from "react";
 import { AiOutlinePhone, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
+import { useRecoilState } from "recoil";
 
 import {
 	DropdownMenu,
@@ -16,7 +17,10 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { cartAtom } from "./atoms/cartAtom";
+
 export default function Navbar(): React.JSX.Element {
+	const cart = useRecoilState(cartAtom)[0];
 	const router = useRouter();
 	const navLinks = [
 		{
@@ -68,7 +72,7 @@ export default function Navbar(): React.JSX.Element {
 					<p className="flex items-center text-2xl font-bold">GLAM</p>
 				</div>
 				<ul className="hidden list-none flex-row items-center justify-center gap-10 md:flex">
-					{navLinks.map((link) => (
+					{navLinks.slice(0, 2).map((link) => (
 						<li key={link.title}>
 							<div>
 								<p
@@ -82,6 +86,19 @@ export default function Navbar(): React.JSX.Element {
 							</div>
 						</li>
 					))}
+					<li className="flex items-center justify-center">
+						<button
+							onClick={(): void => {
+								setActive("Cart");
+								router.push("/cart");
+							}}
+							className="relative flex items-center justify-center">
+							<AiOutlineShoppingCart className="h-6 w-6" />
+							<span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform animate-pulse items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold leading-none text-red-100">
+								{cart.length}
+							</span>
+						</button>
+					</li>
 				</ul>
 				<div className="flex items-center md:hidden">
 					<DropdownMenu>

@@ -1,27 +1,76 @@
 "use client";
 
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { BsCartDash } from "react-icons/bs";
+import { Carousel } from "react-responsive-carousel";
+import { toast, ToastContainer } from "react-toastify";
+import { useRecoilState } from "recoil";
 
 import { Product } from "@/lib/hooks/getProducts";
 
+import { cartAtom } from "./atoms/cartAtom";
+
 export default function ProductDetails({ product }: { product: Product }): React.JSX.Element {
 	const [count, setCount] = React.useState(1);
+	const [cart, addProduct] = useRecoilState(cartAtom);
+	const addItemsToCart = (): void => {
+		if (cart.find((item) => item._id === product._id)) {
+			addProduct((prev) =>
+				prev.map((item) => {
+					if (item._id === product._id) {
+						return {
+							...item,
+							quantity: item.quantity + count,
+						};
+					}
+					return item;
+				})
+			);
+		} else {
+			addProduct((prev) => [
+				...prev,
+				{
+					...product,
+					quantity: count,
+				},
+			]);
+		}
+		toast.success("Added to cart", {
+			position: "bottom-right",
+			autoClose: 2000,
+		});
+	};
 	return (
 		<div className="mx-auto flex h-screen max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
 			<div className="-mx-4 mb-10 flex flex-col space-x-5 md:flex-row">
 				<div className="px-4 md:flex-1">
 					<div className="mb-4 flex h-64 w-full items-center justify-center rounded-lg md:h-80">
-						<Image
-							alt="Product"
-							unoptimized
-							width={100}
-							height={100}
-							src={product.images[0]}
-							className="h-full w-full rounded-lg object-cover shadow-[0_35px_120px_-15px_#211e35]"
-						/>
+						<Carousel
+							className="h-full w-full shadow-[0_35px_120px_-15px_#211e35]"
+							showArrows={false}
+							showStatus={false}
+							infiniteLoop={true}
+							autoPlay={true}
+							showThumbs={false}
+							interval={5000}
+							emulateTouch={true}>
+							{product.images.map((image, index) => (
+								<Image
+									key={`${product._id}-${index}`}
+									alt="Product"
+									unoptimized
+									width={100}
+									height={100}
+									src={image}
+									className="h-64 w-full rounded-lg object-cover md:h-80"
+								/>
+							))}
+						</Carousel>
 					</div>
 				</div>
 				<div className="m-auto h-full w-full px-4 md:flex-1">
@@ -42,9 +91,7 @@ export default function ProductDetails({ product }: { product: Product }): React
 							<p className="text-sm text-gray-400">Inclusive of all Taxes.</p>
 						</div>
 					</div>
-
 					<p className="text-gray-300">{product.details}</p>
-
 					<div className="flex space-x-4 py-4">
 						<div className="relative rounded-md bg-white">
 							<div className="absolute left-0 right-0 block pt-2 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -66,6 +113,7 @@ export default function ProductDetails({ product }: { product: Product }): React
 						</div>
 
 						<button
+							onClick={addItemsToCart}
 							type="button"
 							className="flex h-14 flex-row items-center justify-center rounded-xl bg-indigo-600 px-6 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:bg-indigo-500">
 							<BsCartDash className="mr-2 h-6 w-6 text-white" />
@@ -74,6 +122,7 @@ export default function ProductDetails({ product }: { product: Product }): React
 					</div>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 }
