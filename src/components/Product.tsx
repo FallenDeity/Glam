@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: Product }): React.JS
 	const router = useRouter();
 	return (
 		<div className="w-72 rounded-xl bg-white shadow-md duration-500 hover:scale-105 hover:shadow-xl">
-			<div onClick={(): void => router.push(`/product/${product.slug}`)}>
+			<div onClick={(): void => router.push(`/products/${product.slug.current}`)}>
 				<Image
 					unoptimized
 					width={100}

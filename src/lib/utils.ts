@@ -7,7 +7,8 @@ export function cn(...inputs: ClassValue[]): string {
 
 export const meta = {
 	title: "Glam",
-	description: "A new generation ecommerce cosmetics store!",
+	metadataBase: new URL(String(process.env.NEXT_PUBLIC_BASE_URL)),
+	description: "A new generation e-commerce cosmetics store!",
 	keywords: ["glam", "cosmetics", "makeup", "beauty", "skincare"],
 	authors: [{ name: "FallenDeity" }],
 	robots: {
@@ -17,7 +18,7 @@ export const meta = {
 	},
 	openGraph: {
 		title: "Glam",
-		description: "A new generation ecommerce cosmetics store!",
+		description: "A new generation e-commerce cosmetics store!",
 		images: "/logo.png",
 		type: "website",
 	},

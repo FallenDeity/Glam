@@ -68,6 +68,7 @@
 		"clsx": "^1.2.1",
 		"framer-motion": "^10.13.0",
 		"lucide-react": "^0.259.0",
+		"moment": "^2.29.4",
 		"next": "^13.4.4",
 		"next-sanity": "^5.1.2",
 		"react": "^18.2.0",

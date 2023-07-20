@@ -41,11 +41,11 @@ export default function Navbar(): React.JSX.Element {
 		const handleScroll = (): void => {
 			if (navBarRef.current) {
 				if (window.scrollY > 0) {
-					navBarRef.current.classList.remove("bg-inherit");
+					navBarRef.current.classList.remove("bg-inherit", "text-white");
 					navBarRef.current.classList.add("backdrop-blur-sm", "bg-white", "shadow-lg", "text-black");
 				} else {
 					navBarRef.current.classList.remove("backdrop-blur-sm", "bg-white", "shadow-lg", "text-black");
-					navBarRef.current.classList.add("bg-inherit");
+					navBarRef.current.classList.add("bg-inherit", "text-white");
 				}
 			}
 		};
@@ -54,7 +54,7 @@ export default function Navbar(): React.JSX.Element {
 	}, []);
 	return (
 		<nav
-			className={`fixed top-0 z-[10000] flex w-full items-center bg-inherit px-10 py-5 backdrop-filter transition-all duration-300 ease-in`}
+			className={`fixed top-0 z-[10000] flex w-full items-center bg-inherit px-10 py-5 text-white backdrop-filter transition-all duration-300 ease-in`}
 			ref={navBarRef}>
 			<div className="mx-auto flex w-full items-center justify-between">
 				<div
@@ -103,20 +103,12 @@ export default function Navbar(): React.JSX.Element {
 										className="items-center justify-between px-2 py-[0.2rem]">
 										<div>
 											<DropdownMenuLabel
-												className={`cursor-pointer ${
-													active === link.title
-														? "text-white"
-														: "text-neutral-200 text-opacity-90"
-												} text-md cursor-pointer font-medium transition duration-300 ease-in-out hover:text-white`}>
+												className={`text-md cursor-pointer font-medium transition duration-300 ease-in-out`}>
 												{link.title}
 											</DropdownMenuLabel>
 										</div>
 										<link.icon
-											className={`${
-												active === link.title
-													? "text-white"
-													: "text-neutral-200 text-opacity-90"
-											} text-md cursor-pointer transition duration-300 ease-in-out hover:text-white`}
+											className={`text-md cursor-pointer transition duration-300 ease-in-out`}
 										/>
 									</DropdownMenuItem>
 								))}

@@ -9,7 +9,7 @@ export interface Product {
 	images: string[];
 	category: string;
 	name: string;
-	slug: string;
+	slug: { current: string };
 	price: number;
 	details: string;
 	_createdAt: string;

@@ -11,6 +11,7 @@ export default function Products(): React.JSX.Element {
 	const products = useProducts();
 	const [bestSellingProducts, setBestSellingProducts] = React.useState<Product[]>([]);
 	React.useEffect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (products) {
 			setBestSellingProducts(products);
 		}
@@ -29,6 +30,7 @@ export default function Products(): React.JSX.Element {
 				id="products">
 				{bestSellingProducts.map((product, index) => (
 					<motion.div
+						key={product._id}
 						variants={fadeIn("up", "spring", index * 0.15, 0.75)}
 						initial="hidden"
 						whileInView="show"
