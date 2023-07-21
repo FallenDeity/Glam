@@ -11,6 +11,7 @@
 - [x] Editable cart.
 - [x] Product categories and filters.
 - [x] Notification toasts.
+- [x] [Youtube Demo](https://youtu.be/zVBGZrwLYt0)
 
 # Demo
 
