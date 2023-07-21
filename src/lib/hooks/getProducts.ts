@@ -21,7 +21,6 @@ export default function useProducts(): Product[] {
 		async function fetchProducts(): Promise<void> {
 			const query = '*[_type == "product"] | order(_createdAt desc)';
 			const _products = await sanityClient.fetch<Product[]>(query);
-			console.log(_products);
 			_products.forEach((product) => {
 				product.images = product.images.map((image) => urlFor(image).url());
 			});

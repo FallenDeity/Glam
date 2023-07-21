@@ -20,6 +20,7 @@ export default function ProductDetails({ product }: { product: Product }): React
 	const [cart, addProduct] = useRecoilState(cartAtom);
 	const addItemsToCart = (): void => {
 		if (cart.find((item) => item._id === product._id)) {
+			console.log("Already in cart");
 			addProduct((prev) =>
 				prev.map((item) => {
 					if (item._id === product._id) {

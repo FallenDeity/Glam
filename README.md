@@ -1,8 +1,27 @@
+<p align="center"><img src="./public/logo.png" alt="Logo" width="300" height="300"></p>
+<h1 align="center">Glam</h1>
+<h4 align="center">A cosmetics e-commerce store built using next js, sanity and typescript.</h4>
+
+# Features
+
+- [x] Modern and responsive UI.
+- [x] Integration of payment system (stripe).
+- [x] CMS for managing products (sanity).
+- [x] Persistent cart over multiple sessions.
+- [x] Editable cart.
+- [x] Product categories and filters.
+- [x] Notification toasts.
+
+# Demo
+
+![Demo](./public/demo.gif)
+
+
 # Setup
 
 ```bash
-$ git clone https://github.com/FallenDeity/react-next-tailwind-template
-$ cd react-next-tailwind-template
+$ git clone https://github.com/FallenDeity/Glam
+$ cd Glam
 $ npm install
 ```
 

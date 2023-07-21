@@ -15,6 +15,7 @@ export default function CartProducts(): React.JSX.Element {
 	const [cart, setCart] = useRecoilState(cartAtom);
 	const removeProduct = (product: Product): void => {
 		setCart((oldCart) => oldCart.filter((p) => p._id !== product._id));
+		localStorage.setItem("cart", JSON.stringify(cart.filter((p) => p._id !== product._id)));
 		toast.success("Product removed from cart", {
 			position: "bottom-right",
 			autoClose: 2000,

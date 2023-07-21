@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlinePhone, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
@@ -16,11 +16,26 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Product } from "@/lib/hooks/getProducts";
+import { sanityClient, urlFor } from "@/lib/sanity.client";
 
-import { cartAtom } from "./atoms/cartAtom";
+import { cartAtom, CartProduct } from "./atoms/cartAtom";
+import { globalAtom } from "./atoms/globalAtom";
+
+async function fetchProduct(productId: string): Promise<Product | null> {
+	const query = '*[_type == "product" && _id == $productId][0]';
+	const product = await sanityClient.fetch<Product | null>(query, { productId });
+	if (!product) {
+		return null;
+	}
+	product.images = product.images.map((image) => urlFor(image).url());
+	return product;
+}
 
 export default function Navbar(): React.JSX.Element {
-	const cart = useRecoilState(cartAtom)[0];
+	const [cart, setCart] = useRecoilState(cartAtom);
+	const [_global, setGlobal] = useRecoilState(globalAtom);
+	const pathname = usePathname();
 	const router = useRouter();
 	const navLinks = [
 		{
@@ -56,6 +71,33 @@ export default function Navbar(): React.JSX.Element {
 		window.addEventListener("scroll", handleScroll);
 		return (): void => window.removeEventListener("scroll", handleScroll);
 	}, []);
+	React.useEffect(() => {
+		if (pathname.includes("success")) {
+			localStorage.removeItem("cart");
+			setCart([]);
+		}
+		const cartItems = localStorage.getItem("cart");
+		if (cartItems && !_global) {
+			for (const item of JSON.parse(cartItems) as CartProduct[]) {
+				void fetchProduct(item._id).then((product) => {
+					if (product) {
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+						setCart((prev) => [
+							...prev,
+							{
+								...product,
+								quantity: item.quantity,
+							},
+						]);
+					}
+				});
+			}
+			setGlobal(true);
+		}
+	}, [_global]);
+	React.useEffect(() => {
+		localStorage.setItem("cart", JSON.stringify(cart));
+	}, [cart]);
 	return (
 		<nav
 			className={`fixed top-0 z-[10000] flex w-full items-center bg-inherit px-10 py-5 text-white backdrop-filter transition-all duration-300 ease-in`}

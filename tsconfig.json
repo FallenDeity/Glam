@@ -35,6 +35,6 @@
 			"@tests/*": ["./tests/*"]
 		}
 	},
-	"include": ["src/**/*", "tests/**/*", "dist/types/**/*.ts"],
+	"include": ["src/**/*", "tests/**/*", "dist/types/**/*.ts", "public/page.tsx"],
 	"exclude": ["node_modules", "dist", "types"]
 }

@@ -1,13 +1,53 @@
 "use client";
+import "react-toastify/dist/ReactToastify.css";
 
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BeatLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
 import { useRecoilState } from "recoil";
 
-import { cartAtom } from "./atoms/cartAtom";
+import { StripeClient } from "@/lib/stripe.client";
+
+import { cartAtom, CartProduct } from "./atoms/cartAtom";
+
+function convertCart(cart: CartProduct[]): { id: string; quantity: number }[] {
+	return cart.map((product) => ({ id: product._id, quantity: product.quantity }));
+}
 
 export default function CartWidget(): React.JSX.Element {
+	const [loading, setLoading] = React.useState<boolean>(false);
 	const cart = useRecoilState(cartAtom)[0];
+	const handleCheckout = async (): Promise<void> => {
+		setLoading(true);
+		const client = new StripeClient();
+		const stripe = await client.getStripe();
+		const response = await fetch("/api/stripe", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ cart: convertCart(cart) }),
+		});
+		if (response.status !== 200) {
+			const message = (await response.json()) as { message: string };
+			toast.error(message.message, {
+				position: "bottom-right",
+				autoClose: 2000,
+			});
+			setLoading(false);
+			return;
+		} else {
+			const session = (await response.json()) as { id: string };
+			toast.loading("Redirecting to checkout", {
+				position: "bottom-right",
+				autoClose: 2000,
+			});
+			localStorage.setItem("session_id", session.id);
+			void stripe.redirectToCheckout({ sessionId: session.id });
+		}
+		setLoading(false);
+	};
 	return (
 		<div className="mb-8 flex flex-col rounded-lg bg-white p-8 shadow-lg">
 			<h1 className="border-b pb-8 text-center text-2xl font-semibold text-neutral-800">Order Summary</h1>
@@ -41,10 +81,15 @@ export default function CartWidget(): React.JSX.Element {
 						₹{Math.round(cart.reduce((a, b) => a + b.price * b.quantity, 0)).toLocaleString("en-IN")}
 					</span>
 				</div>
-				<button className="w-full rounded-md bg-indigo-500 py-3 text-sm font-semibold uppercase text-white transition-all duration-300 ease-in-out hover:bg-indigo-600">
-					Checkout
+				<button
+					disabled={loading}
+					className="inline-flex w-full items-center justify-center rounded-md bg-indigo-500 py-3 text-sm font-semibold uppercase text-white transition-all duration-300 ease-in-out hover:bg-indigo-600 disabled:cursor-not-allowed disabled:bg-blue-400"
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises
+					onClick={handleCheckout}>
+					{loading ? <BeatLoader color="#fff" size={10} /> : "Checkout"}
 				</button>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 }
