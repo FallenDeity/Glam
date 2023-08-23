@@ -6,10 +6,10 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 export const meta = {
-	title: "Glam",
+	title: "Verstyl",
 	metadataBase: new URL(String(process.env.NEXT_PUBLIC_BASE_URL)),
 	description: "A new generation e-commerce cosmetics store!",
-	keywords: ["glam", "cosmetics", "makeup", "beauty", "skincare"],
+	keywords: ["Verstyl", "clothes", "luxury", "beauty", "cultural"],
 	authors: [{ name: "FallenDeity" }],
 	robots: {
 		follow: true,
@@ -17,8 +17,8 @@ export const meta = {
 		nocache: true,
 	},
 	openGraph: {
-		title: "Glam",
-		description: "A new generation e-commerce cosmetics store!",
+		title: "Verstyl",
+		description: "A new generation e-commerce cloth-line store!",
 		images: "/logo.png",
 		type: "website",
 	},

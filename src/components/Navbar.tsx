@@ -111,7 +111,7 @@ export default function Navbar(): React.JSX.Element {
 						window.scrollTo(0, 0);
 					}}>
 					<Image src={"/logo.png"} width={50} height={50} alt="Logo" className="h-8 w-8 object-contain" />
-					<p className="flex items-center text-2xl font-bold">GLAM</p>
+					<p className="flex items-center text-2xl font-bold">Verstyl</p>
 				</div>
 				<ul className="hidden list-none flex-row items-center justify-center gap-10 md:flex">
 					{navLinks.slice(0, 2).map((link) => (

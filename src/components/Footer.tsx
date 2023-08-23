@@ -13,10 +13,10 @@ export default function Footer(): React.JSX.Element {
 							height={10}
 							src="/logo.png"
 							className="mr-3 h-8 w-8"
-							alt="Glam Logo"
+							alt="Verstyl Logo"
 						/>
 						<span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-							Glam
+							Verstyl
 						</span>
 					</a>
 					<ul className="mb-6 flex flex-wrap items-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:mb-0">
@@ -46,7 +46,7 @@ export default function Footer(): React.JSX.Element {
 				<span className="block text-sm text-gray-500 dark:text-gray-400 sm:text-center">
 					© 2023{" "}
 					<a href="https://flowbite.com/" className="hover:underline">
-						Glam™
+						Verstyl™
 					</a>
 					. All Rights Reserved.
 				</span>
