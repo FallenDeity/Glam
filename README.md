@@ -1,4 +1,4 @@
-<p align="center"><img src="./public/logo.png" alt="Logo" width="300" height="300"></p>
+<p align="center"><img src="./public/verstyl.png" alt="Logo" width="300" height="300"></p>
 <h1 align="center">Glam</h1>
 <h4 align="center">A cosmetics e-commerce store built using next js, sanity and typescript.</h4>
 

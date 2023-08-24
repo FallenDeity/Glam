@@ -5,9 +5,9 @@ export default function HeroBanner(): React.JSX.Element {
 	return (
 		<div className="flex h-screen w-full flex-col items-center justify-center text-right text-white">
 			<div className="flex flex-col items-center justify-center space-y-2 text-center">
-				<Image src="/logo.png" width={200} height={200} alt="Logo" />
-				<p className="text-5xl font-bold">Verstyl</p>
-				<p className="text-2xl font-semibold">The best place to buy cosmetics</p>
+				<Image src="/verstyl.png" width={200} height={200} alt="Logo" />
+				<p className="mt-5 text-6xl font-bold">Verstyl</p>
+				<p className="mt-3 text-2xl font-extralight">The best place to buy clothes</p>
 			</div>
 		</div>
 	);

@@ -11,7 +11,7 @@ export default function Footer(): React.JSX.Element {
 							unoptimized
 							width={10}
 							height={10}
-							src="/logo.png"
+							src="/verstyl.png"
 							className="mr-3 h-8 w-8"
 							alt="Verstyl Logo"
 						/>

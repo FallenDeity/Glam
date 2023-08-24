@@ -19,7 +19,7 @@ export const meta = {
 	openGraph: {
 		title: "Verstyl",
 		description: "A new generation e-commerce cloth-line store!",
-		images: "/logo.png",
+		images: "/verstyl.png",
 		type: "website",
 	},
 	themeColor: "#e422f2",
